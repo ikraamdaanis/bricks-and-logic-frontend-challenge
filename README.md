@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Character Viewer
 
-## Getting Started
+### OVERVIEW
 
-First, run the development server:
+The character viewer is a web-app to browse the characters provided by a GraphQL API
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### GOALS
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Allow the user to browse a list of characters of the show Rick & Morty.
+2. Present the retrieved characters and their image in an elegant and logical manner (think
+   about what a user would like to be able to do).
+3. Allow the user to expand a character to see more details such as episodes they appeared in.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### SPECIFICATIONS
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Use Typescript, React and Next.js (or equivalent) and any method for consuming a GraphQL api
+you wish. Use any css frameworks or other helper libraries as you choose. Deploy your app using a
+quick deployment tool such as Vercel and provide a link to a git repository.
 
-## Learn More
+We are looking for an expression of what you are able to do. This project is the occasion to
+showcase what you are good at. You should produce a piece of software that is functioning and is
+cleanly coded.
 
-To learn more about Next.js, take a look at the following resources:
+The user interface should be mobile responsive, functional and good looking. Use the homepage of
+https://rickandmortyapi.com/ as a baseline for what is expected, but if you want to be creative and
+try something different, go ahead.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+There is a GraphQL playground at https://rickandmortyapi.com/graphql and full documentation of
+the API at https://rickandmortyapi.com/documentation.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### BONUS FEATURES
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Provide filtering / search functionality (or other features provided by API)
+- Beautiful and functional UI and animations
+- Clean code, good component composition, separation of concerns
+- Tested components and unit tests
+- Full git history
