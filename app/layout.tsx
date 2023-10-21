@@ -1,3 +1,4 @@
+import { QueryProvider } from "components/providers/QueryProvider";
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import { ReactNode } from "react";
@@ -16,8 +17,10 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en">
-      <body className={manrope.className}>{children}</body>
-    </html>
+    <QueryProvider>
+      <html lang="en">
+        <body className={manrope.className}>{children}</body>
+      </html>
+    </QueryProvider>
   );
 }

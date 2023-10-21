@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle
 } from "components/ui/card";
+import { CharactersContainer } from "features/characters/components/CharactersContainer";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
           <p>Card Footer</p>
         </CardFooter>
       </Card>
+      <CharactersContainer />
     </main>
   );
 }
