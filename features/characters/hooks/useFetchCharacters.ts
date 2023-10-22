@@ -1,9 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { RickAndMortyResponse } from "features/characters/types";
 
+// https://rickandmortyapi.com/documentation/
+const API_URL = "https://rickandmortyapi.com/api/character/?page=1";
+
 /** Fetches characters from he Rick and Morty API. */
-async function fetchCharacters() {
-  const response = await fetch("https://rickandmortyapi.com/api/character");
+async function fetchCharacters(pageParam: string) {
+  console.log("PAGE PARAM: ", pageParam);
+  const response = await fetch(pageParam || API_URL);
 
   if (response.status !== 200) {
     throw new Error(response.statusText);
@@ -16,8 +20,11 @@ async function fetchCharacters() {
 
 /** Query hook that fetches Rick and Morty characters. */
 export const useFetchCharacters = () => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["fetchCharacters"],
-    queryFn: () => fetchCharacters()
+    queryFn: data => fetchCharacters(data.pageParam),
+    initialPageParam: API_URL,
+    getNextPageParam: data => data.info.next || null,
+    getPreviousPageParam: data => data.info.prev || null
   });
 };
