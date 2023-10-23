@@ -27,9 +27,9 @@ export const CharactersContainer = () => {
         loadingMessage={
           <Loader2 className="my-4 h-6 w-6 animate-spin text-zinc-500" />
         }
-        className="scroller flex w-full flex-1 flex-col items-center overflow-auto"
+        className="scroller mx-auto flex flex-1 flex-col items-center overflow-auto"
       >
-        <div className="mx-auto grid w-full grid-cols-3 gap-4">
+        <div className="mx-auto grid w-full grid-cols-[repeat(3,minmax(0,340px))] gap-4">
           {rows.map(character => {
             return <CharacterCard key={character.id} character={character} />;
           })}

@@ -6,7 +6,7 @@ type Location = {
 export type Character = {
   id: number;
   name: string;
-  status: string;
+  status: "Alive" | "Dead" | "unknown";
   species: string;
   type: string;
   gender: string;

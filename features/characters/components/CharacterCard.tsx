@@ -1,33 +1,56 @@
 "use client";
 
+import { Badge } from "components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
 import { Character } from "features/characters/types";
+import Image from "next/image";
 import { memo } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "components/ui/card";
 
 type Props = {
   character: Character;
 };
 
+const statusVariants = {
+  Alive: "alive",
+  Dead: "dead",
+  unknown: "default"
+} as const;
+
+/**
+ * Displays information about a character such as the name,
+ * status, species, last known location and origin.
+ */
 export const CharacterCard = memo(function CharacterCard({ character }: Props) {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>{character.name}</CardTitle>
-        <CardDescription>{character.status}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p>Card Content</p>
+      <CardContent className="p-4 pb-0">
+        <Image
+          width={300}
+          height={300}
+          src={character.image}
+          alt={character.name}
+          className="mx-auto rounded-sm"
+        />
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
+      <CardHeader className="p-4 pb-0">
+        <CardTitle>{character.name}</CardTitle>
+        <div>
+          <Badge
+            variant={statusVariants[character.status] || "default"}
+            className="capitalize"
+          >
+            {character.status} - {character.species}
+          </Badge>
+        </div>
+      </CardHeader>
+      <CardContent className="p-4 pb-0">
+        <p className="font-medium text-zinc-500">Last known location:</p>
+        <p className="text-lg font-medium">{character.location.name}</p>
+      </CardContent>
+      <CardContent className="p-4">
+        <p className="font-medium text-zinc-500">Originally from:</p>
+        <p className="text-lg font-medium">{character.origin.name}</p>
+      </CardContent>
     </Card>
   );
 });
