@@ -10,7 +10,7 @@ type Props = {
 };
 
 /**
- * Individual Character display.
+ * Displays an individual character with more details.
  */
 export const CharacterContainer = ({ characterId }: Props) => {
   const router = useRouter();
@@ -20,7 +20,7 @@ export const CharacterContainer = ({ characterId }: Props) => {
   if (!data) return null;
 
   return (
-    <div className="mx-auto flex w-full max-w-screen-xl flex-col items-center py-4">
+    <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center py-4">
       <Button onClick={() => router.back()} className="my-4 mr-auto">
         Go Back
       </Button>

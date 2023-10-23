@@ -20,7 +20,7 @@ export const CharactersContainer = () => {
     []) as Character[];
 
   return (
-    <div className="mx-auto flex w-full max-w-screen-xl flex-col items-center py-4">
+    <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center py-4">
       <InfiniteScroller
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage || false}
@@ -29,7 +29,7 @@ export const CharactersContainer = () => {
         }
         className="scroller mx-auto flex flex-1 flex-col items-center overflow-auto"
       >
-        <div className="mx-auto grid w-full grid-cols-[repeat(3,minmax(0,340px))] gap-4">
+        <div className="mx-auto grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(0,340px))]">
           {rows.map(character => {
             return <CharacterCard key={character.id} character={character} />;
           })}
