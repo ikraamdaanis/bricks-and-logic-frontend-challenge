@@ -18,7 +18,21 @@ export type Character = {
   created: string;
 };
 
-export type RickAndMortyResponse = {
+export type Episode = {
+  id: number;
+  name: string;
+  air_date: string;
+  episode: string;
+  characters: string[];
+  url: string;
+  created: string;
+};
+
+export type CharacterResponse = Character & {
+  episodes: Episode[];
+};
+
+export type CharactersResponse = {
   info: {
     count: number;
     pages: number;

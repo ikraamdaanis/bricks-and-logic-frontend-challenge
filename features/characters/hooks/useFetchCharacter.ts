@@ -2,19 +2,34 @@ import { useQuery } from "@tanstack/react-query";
 import { Character } from "features/characters/types";
 
 // https://rickandmortyapi.com/documentation/
-const API_URL = "https://rickandmortyapi.com/api/character";
+const CHARACTER_URL = "https://rickandmortyapi.com/api/character";
+const EPISODE_URL = "https://rickandmortyapi.com/api/episode";
 
 /** Fetches a character from he Rick and Morty API. */
 async function fetchCharacter(characterId: string) {
-  const response = await fetch(`${API_URL}/${characterId}`);
+  const responseCharacter = await fetch(`${CHARACTER_URL}/${characterId}`);
 
-  if (response.status !== 200) {
-    throw new Error(response.statusText);
+  if (responseCharacter.status !== 200) {
+    throw new Error(responseCharacter.statusText);
   }
 
-  const data = (await response.json()) as Character;
+  const dataCharacter = (await responseCharacter.json()) as Character;
 
-  return data;
+  const episodeNumbers = dataCharacter.episode.map(episode => {
+    // "https://rickandmortyapi.com/api/episode/5" => 5
+    return episode.split("https://rickandmortyapi.com/api/episode/")[1];
+  });
+
+  const responseEpisodes = await fetch(
+    `${EPISODE_URL}/${episodeNumbers.join(",")}`
+  );
+
+  if (responseEpisodes.status !== 200) {
+    throw new Error(responseCharacter.statusText);
+  }
+  const dataEpisodes = await responseEpisodes.json();
+
+  return { ...dataCharacter, episodes: dataEpisodes };
 }
 
 /** Query hook that fetches a Rick and Morty character. */
