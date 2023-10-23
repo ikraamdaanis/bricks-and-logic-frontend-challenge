@@ -21,7 +21,10 @@ export const CharacterContainer = ({ characterId }: Props) => {
 
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center py-4">
-      <Button onClick={() => router.back()} className="my-4 mr-auto">
+      <Button
+        onClick={() => router.back()}
+        className="bg-brand2-600 hover:bg-brand2-500 my-4 mr-auto"
+      >
         Go Back
       </Button>
       <CharacterCard character={data} />

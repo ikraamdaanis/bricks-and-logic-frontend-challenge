@@ -24,7 +24,7 @@ const statusVariants = {
 export const CharacterCard = memo(function CharacterCard({ character }: Props) {
   return (
     <Link href={`/character/${character.id}`}>
-      <Card className="cursor-pointer">
+      <Card className="hover:border-brand-500 cursor-pointer transition">
         <CardContent className="p-4 pb-0">
           <Image
             width={300}
