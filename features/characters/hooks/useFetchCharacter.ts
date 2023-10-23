@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Character } from "features/characters/types";
+import { Character, Episode } from "features/characters/types";
 
 // https://rickandmortyapi.com/documentation/
 const CHARACTER_URL = "https://rickandmortyapi.com/api/character";
@@ -27,7 +27,7 @@ async function fetchCharacter(characterId: string) {
   if (responseEpisodes.status !== 200) {
     throw new Error(responseCharacter.statusText);
   }
-  const dataEpisodes = await responseEpisodes.json();
+  const dataEpisodes = (await responseEpisodes.json()) as Episode[];
 
   return { ...dataCharacter, episodes: dataEpisodes };
 }
