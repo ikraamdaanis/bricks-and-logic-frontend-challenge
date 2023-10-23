@@ -4,6 +4,7 @@ import { Badge } from "components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
 import { Character } from "features/characters/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { memo } from "react";
 
 type Props = {
@@ -21,8 +22,12 @@ const statusVariants = {
  * status, species, last known location and origin.
  */
 export const CharacterCard = memo(function CharacterCard({ character }: Props) {
+  const router = useRouter();
   return (
-    <Card>
+    <Card
+      onClick={() => router.push(`/character/${character.id}`)}
+      className="cursor-pointer"
+    >
       <CardContent className="p-4 pb-0">
         <Image
           width={300}
