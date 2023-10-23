@@ -2,13 +2,13 @@
 
 import { Badge } from "components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
-import { Character } from "features/characters/types";
+import { CharacterResponse } from "features/characters/types";
 import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
 
 type Props = {
-  character: Character;
+  character: CharacterResponse;
 };
 
 const statusVariants = {
@@ -25,18 +25,16 @@ export const CharacterCard = memo(function CharacterCard({ character }: Props) {
   return (
     <Link href={`/character/${character.id}`}>
       <Card className="hover:border-brand-500 cursor-pointer transition">
-        <CardContent className="p-4 pb-0">
+        <CardContent className="relative p-4 pb-0">
           <Image
             width={300}
             height={300}
             src={character.image}
             alt={character.name}
             className="mx-auto rounded-sm"
+            priority
           />
-        </CardContent>
-        <CardHeader className="p-4 pb-0">
-          <CardTitle>{character.name}</CardTitle>
-          <div>
+          <div className="absolute right-6 top-6">
             <Badge
               variant={statusVariants[character.status] || "default"}
               className="capitalize"
@@ -44,6 +42,9 @@ export const CharacterCard = memo(function CharacterCard({ character }: Props) {
               {character.status} - {character.species}
             </Badge>
           </div>
+        </CardContent>
+        <CardHeader className="p-4 pb-0">
+          <CardTitle>{character.name}</CardTitle>
         </CardHeader>
         <CardContent className="p-4 pb-0">
           <p className="font-medium text-zinc-500">Last known location:</p>
