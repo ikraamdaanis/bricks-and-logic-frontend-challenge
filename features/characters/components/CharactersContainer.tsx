@@ -1,10 +1,12 @@
 "use client";
 
 import { InfiniteScroller } from "components/InfiniteScroller";
-import { CharacterCard } from "features/characters/components/CharacterCard";
+import {
+  CharacterCard,
+  CharacterCardLoader
+} from "features/characters/components/CharacterCard";
 import { useFetchCharacters } from "features/characters/hooks/useFetchCharacters";
-import { Character } from "features/characters/types";
-import { Loader2 } from "lucide-react";
+import { CharacterResponse } from "features/characters/types";
 
 /**
  * A container component for displaying a list of characters fetched
@@ -12,27 +14,46 @@ import { Loader2 } from "lucide-react";
  * keep scrolling and load more characters.
  */
 export const CharactersContainer = () => {
-  const { data, fetchNextPage, hasNextPage } = useFetchCharacters();
+  const {
+    data,
+    isLoading,
+    isFetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage
+  } = useFetchCharacters();
 
-  console.log(data);
+  const isFetchingMore = isFetching || isFetchingNextPage;
 
   const rows = (data?.pages.flatMap(page => page?.results || []) ||
-    []) as Character[];
+    []) as CharacterResponse[];
 
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center py-4">
       <InfiniteScroller
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage || false}
-        loadingMessage={
-          <Loader2 className="my-4 h-6 w-6 animate-spin text-zinc-500" />
-        }
+        loadingMessage={null}
         className="scroller mx-auto flex flex-1 flex-col items-center overflow-auto"
       >
         <div className="mx-auto grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(0,340px))]">
-          {rows.map(character => {
-            return <CharacterCard key={character.id} character={character} />;
-          })}
+          {isLoading
+            ? Array.from(Array(30)).map((_, i) => {
+                return <CharacterCardLoader key={i} />;
+              })
+            : rows.map(character => {
+                return (
+                  <CharacterCard key={character.id} character={character} />
+                );
+              })}
+
+          {isFetchingMore && (
+            <>
+              {Array.from(Array(30)).map((_, i) => {
+                return <CharacterCardLoader key={i} />;
+              })}
+            </>
+          )}
         </div>
       </InfiniteScroller>
     </div>

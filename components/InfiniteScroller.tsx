@@ -3,7 +3,7 @@ import React from "react";
 interface InfiniteScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   fetchNextPage: () => void;
   hasNextPage: boolean;
-  loadingMessage: React.ReactNode;
+  loadingMessage?: React.ReactNode;
   endingMessage?: React.ReactNode;
 }
 
@@ -18,8 +18,8 @@ export const InfiniteScroller = React.forwardRef<
   {
     fetchNextPage,
     hasNextPage,
+    loadingMessage = null,
     endingMessage = null,
-    loadingMessage,
     children,
     ...props
   },

@@ -44,17 +44,39 @@ export const CharacterCard = memo(function CharacterCard({ character }: Props) {
           </div>
         </CardContent>
         <CardHeader className="p-4 pb-0">
-          <CardTitle>{character.name}</CardTitle>
+          <CardTitle className="line-clamp-1">{character.name}</CardTitle>
         </CardHeader>
         <CardContent className="p-4 pb-0">
           <p className="font-medium text-zinc-500">Last known location:</p>
-          <p className="text-lg font-medium">{character.location.name}</p>
+          <p className="line-clamp-1 text-lg font-medium">
+            {character.location.name}
+          </p>
         </CardContent>
         <CardContent className="p-4">
           <p className="font-medium text-zinc-500">Originally from:</p>
-          <p className="text-lg font-medium">{character.origin.name}</p>
+          <p className="line-clamp-1 text-lg font-medium">
+            {character.origin.name}
+          </p>
         </CardContent>
       </Card>
     </Link>
   );
 });
+
+/** Skeleton Loader for the Character Cards. */
+export const CharacterCardLoader = () => {
+  return (
+    <div className="flex h-[506px] animate-pulse flex-col rounded-md bg-zinc-300">
+      <div className="m-4 mb-0 h-[300px] w-[300px] animate-pulse rounded-md bg-zinc-400" />
+      <div className="m-4 mb-0 h-6 w-40 animate-pulse rounded-sm bg-zinc-400"></div>
+      <div className="m-4 mb-0 flex flex-col gap-2">
+        <div className="h-4 w-40 animate-pulse rounded-sm bg-zinc-400"></div>
+        <div className="h-6 w-40 animate-pulse rounded-sm bg-zinc-500"></div>
+      </div>
+      <div className="m-4 mb-0 flex flex-col gap-2">
+        <div className="h-4 w-40 animate-pulse rounded-sm bg-zinc-400"></div>
+        <div className="h-6 w-40 animate-pulse rounded-sm bg-zinc-500"></div>
+      </div>
+    </div>
+  );
+};
