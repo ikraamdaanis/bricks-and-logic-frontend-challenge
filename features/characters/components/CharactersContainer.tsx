@@ -1,15 +1,15 @@
 "use client";
 
 import { InfiniteScroller } from "components/InfiniteScroller";
-import { Input } from "components/ui/input";
 import {
   CharacterCard,
   CharacterCardLoader
 } from "features/characters/components/CharacterCard";
+import { CharacterFilter } from "features/characters/components/CharacterFilter";
 import { useFetchCharacters } from "features/characters/hooks/useFetchCharacters";
 import { CharacterResponse } from "features/characters/types";
 import { useDebounce } from "hooks/useDebounce";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 /**
  * A container component for displaying a list of characters fetched
@@ -17,11 +17,9 @@ import { useRouter, useSearchParams } from "next/navigation";
  * keep scrolling and load more characters.
  */
 export const CharactersContainer = () => {
-  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const params = useSearchParams();
-  const nameSearchQuery = params.get("name") || "";
-  const debouncedSearchQuery = useDebounce(params.toString());
+  const debouncedSearchQuery = useDebounce(searchParams.toString());
 
   const {
     data,
@@ -38,25 +36,15 @@ export const CharactersContainer = () => {
     []) as CharacterResponse[];
 
   return (
-    <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-4 py-4">
-      <div className="w-full">
-        <Input
-          placeholder="Search for a Character"
-          className=""
-          defaultValue={nameSearchQuery}
-          onChange={({ target }) => {
-            if (!target.value) return router.replace("/");
-            router.replace(`/?name=${target.value}`);
-          }}
-        />
-      </div>
+    <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-4 px-4 py-4 xl:px-0">
+      <CharacterFilter />
       <InfiniteScroller
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage || false}
         loadingMessage={null}
         className="scroller mx-auto flex flex-1 flex-col items-center overflow-auto"
       >
-        <div className="mx-auto grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(0,340px))]">
+        <div className="mx-auto grid w-full grid-cols-[minmax(0,340px)] gap-4 md:grid-cols-[repeat(2,minmax(0,340px))] lg:grid-cols-[repeat(3,minmax(0,340px))]">
           {isLoading
             ? Array.from(Array(30)).map((_, i) => {
                 return <CharacterCardLoader key={i} />;
@@ -69,7 +57,7 @@ export const CharactersContainer = () => {
 
           {isFetchingMore && (
             <>
-              {Array.from(Array(30)).map((_, i) => {
+              {Array.from(Array(4)).map((_, i) => {
                 return <CharacterCardLoader key={i} />;
               })}
             </>
