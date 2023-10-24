@@ -1,7 +1,7 @@
 "use client";
 
 import { Badge } from "components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
+import { Card, CardContent, CardTitle } from "components/ui/card";
 import { CharacterResponse } from "features/characters/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export const CharacterCard = memo(function CharacterCard({ character }: Props) {
   return (
     <Link href={`/character/${character.id}`}>
       <Card className="hover:border-brand-500 cursor-pointer transition">
-        <CardContent className="relative p-4 pb-0">
+        <div className="relative p-4 pb-0">
           <Image
             width={300}
             height={300}
@@ -42,21 +42,21 @@ export const CharacterCard = memo(function CharacterCard({ character }: Props) {
               {character.status} - {character.species}
             </Badge>
           </div>
-        </CardContent>
-        <CardHeader className="p-4 pb-0">
+        </div>
+        <CardContent className="flex flex-col gap-4 p-4">
           <CardTitle className="line-clamp-1">{character.name}</CardTitle>
-        </CardHeader>
-        <CardContent className="p-4 pb-0">
-          <p className="font-medium text-zinc-500">Last known location:</p>
-          <p className="line-clamp-1 text-lg font-medium">
-            {character.location.name}
-          </p>
-        </CardContent>
-        <CardContent className="p-4">
-          <p className="font-medium text-zinc-500">Originally from:</p>
-          <p className="line-clamp-1 text-lg font-medium">
-            {character.origin.name}
-          </p>
+          <div>
+            <p className="font-medium text-zinc-500">Last known location:</p>
+            <p className="line-clamp-1 text-lg font-medium">
+              {character.location.name}
+            </p>
+          </div>
+          <div>
+            <p className="font-medium text-zinc-500">Originally from:</p>
+            <p className="line-clamp-1 text-lg font-medium">
+              {character.origin.name}
+            </p>
+          </div>
         </CardContent>
       </Card>
     </Link>
