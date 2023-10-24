@@ -5,6 +5,7 @@ interface InfiniteScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   hasNextPage: boolean;
   loadingMessage?: React.ReactNode;
   endingMessage?: React.ReactNode;
+  disabled: boolean;
 }
 
 /**
@@ -20,6 +21,7 @@ export const InfiniteScroller = React.forwardRef<
     hasNextPage,
     loadingMessage = null,
     endingMessage = null,
+    disabled = false,
     children,
     ...props
   },
@@ -30,7 +32,7 @@ export const InfiniteScroller = React.forwardRef<
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
-        if (entries[0]?.isIntersecting) fetchNextPage();
+        if (entries[0]?.isIntersecting) !disabled && fetchNextPage();
       },
       { threshold: 1 }
     );

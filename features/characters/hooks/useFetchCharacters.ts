@@ -14,7 +14,7 @@ async function fetchCharacters(
   );
 
   if (response.status !== 200) {
-    throw new Error(response.statusText);
+    throw new Error("Could not fetch any data.");
   }
 
   const data = (await response.json()) as CharactersResponse;
@@ -32,6 +32,7 @@ export const useFetchCharacters = (searchQuery: string) => {
     queryFn: data => fetchCharacters(data.pageParam, searchQuery),
     initialPageParam: API_URL,
     getNextPageParam: data => data.info.next || null,
-    getPreviousPageParam: data => data.info.prev || null
+    getPreviousPageParam: data => data.info.prev || null,
+    retry: 0
   });
 };

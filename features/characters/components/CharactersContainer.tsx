@@ -27,7 +27,8 @@ export const CharactersContainer = () => {
     isFetching,
     fetchNextPage,
     hasNextPage,
-    isFetchingNextPage
+    isFetchingNextPage,
+    isError
   } = useFetchCharacters(debouncedSearchQuery);
 
   const isFetchingMore = isFetching || isFetchingNextPage;
@@ -38,14 +39,18 @@ export const CharactersContainer = () => {
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-4 px-4 py-4 xl:px-0">
       <CharacterFilter />
+      {isError && (
+        <p className="mt-4 font-semibold text-zinc-800">No more results</p>
+      )}
       <InfiniteScroller
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage || false}
         loadingMessage={null}
         className="scroller mx-auto flex flex-1 flex-col items-center overflow-auto"
+        disabled={isLoading || isError}
       >
         <div className="mx-auto grid w-full grid-cols-[minmax(0,340px)] gap-4 md:grid-cols-[repeat(2,minmax(0,340px))] lg:grid-cols-[repeat(3,minmax(0,340px))]">
-          {isLoading
+          {isLoading && rows.length
             ? Array.from(Array(30)).map((_, i) => {
                 return <CharacterCardLoader key={i} />;
               })
