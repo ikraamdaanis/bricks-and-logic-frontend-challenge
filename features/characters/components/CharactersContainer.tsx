@@ -1,12 +1,15 @@
 "use client";
 
 import { InfiniteScroller } from "components/InfiniteScroller";
+import { Input } from "components/ui/input";
 import {
   CharacterCard,
   CharacterCardLoader
 } from "features/characters/components/CharacterCard";
 import { useFetchCharacters } from "features/characters/hooks/useFetchCharacters";
 import { CharacterResponse } from "features/characters/types";
+import { useDebounce } from "hooks/useDebounce";
+import { useRouter, useSearchParams } from "next/navigation";
 
 /**
  * A container component for displaying a list of characters fetched
@@ -14,6 +17,12 @@ import { CharacterResponse } from "features/characters/types";
  * keep scrolling and load more characters.
  */
 export const CharactersContainer = () => {
+  const router = useRouter();
+
+  const params = useSearchParams();
+  const nameSearchQuery = params.get("name") || "";
+  const debouncedSearchQuery = useDebounce(params.toString());
+
   const {
     data,
     isLoading,
@@ -21,7 +30,7 @@ export const CharactersContainer = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage
-  } = useFetchCharacters();
+  } = useFetchCharacters(debouncedSearchQuery);
 
   const isFetchingMore = isFetching || isFetchingNextPage;
 
@@ -29,7 +38,18 @@ export const CharactersContainer = () => {
     []) as CharacterResponse[];
 
   return (
-    <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center py-4">
+    <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-4 py-4">
+      <div className="w-full">
+        <Input
+          placeholder="Search for a Character"
+          className=""
+          defaultValue={nameSearchQuery}
+          onChange={({ target }) => {
+            if (!target.value) return router.replace("/");
+            router.replace(`/?name=${target.value}`);
+          }}
+        />
+      </div>
       <InfiniteScroller
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage || false}
