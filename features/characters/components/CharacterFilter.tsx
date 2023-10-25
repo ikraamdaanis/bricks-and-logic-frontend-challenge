@@ -96,7 +96,7 @@ export const CharacterFilter = () => {
                         <SelectItem
                           key={option.value}
                           value={option.value}
-                          className=""
+                          className="cursor-pointer"
                         >
                           {searchParams.get(groupLabel) === value && (
                             <span className="absolute left-2 top-1/2 flex h-3.5 w-3.5 -translate-y-1/2 items-center justify-center">
