@@ -1,20 +1,21 @@
 "use client";
 
 import { Button } from "components/ui/button";
-import { Input } from "components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue
-} from "components/ui/select";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "components/ui/dropdown-menu";
+import { Input } from "components/ui/input";
 import { FilterBadge } from "features/characters/components/FilterBadge";
 import { useCreateQueryString } from "hooks/useCreateQueryString";
-import { Check } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Fragment } from "react";
 
 /**
  * Allows users to filter and search for characters. It provides an input
@@ -39,23 +40,22 @@ export const CharacterFilter = () => {
   // https://rickandmortyapi.com/documentation/#filter-characters
   const options = {
     status: [
-      { value: "status=alive", label: "Alive" },
-      { value: "status=dead", label: "Dead" },
-      { value: "status=unknown", label: "Unknown" }
+      { value: "alive", label: "Alive" },
+      { value: "dead", label: "Dead" },
+      { value: "unknown", label: "Unknown" }
     ],
     species: [
-      { value: "species=human", label: "Human" },
-      { value: "species=alien", label: "Alien" }
+      { value: "human", label: "Human" },
+      { value: "alien", label: "Alien" }
     ],
     gender: [
-      { value: "gender=male", label: "Male" },
-      { value: "gender=female", label: "Female" },
-      { value: "gender=genderless", label: "Genderless" },
-      { value: "gender=unknown", label: "Unknown" }
+      { value: "male", label: "Male" },
+      { value: "female", label: "Female" },
+      { value: "genderless", label: "Genderless" },
+      { value: "unknown", label: "Unknown" }
     ]
   };
 
-  /** Clears all filters but doesn't remove the name search param. */
   function clearFilters() {
     const params = new URLSearchParams(searchParams);
 
@@ -81,51 +81,45 @@ export const CharacterFilter = () => {
             router.replace(`${pathname}/?${value}`);
           }}
         />
-        <div className="w-36">
-          <Select
-            onValueChange={value => {
-              const [key, v] = value.split("=");
-              const query = createQueryString(key, v);
-              router.replace(`${pathname}/?${query}`);
-            }}
-            value=""
-          >
-            <SelectTrigger>
-              <SelectValue
-                className="w-48 rounded-md bg-white py-2 pl-4 pr-10 text-gray-900 shadow-md dark:bg-gray-800 dark:text-gray-100"
-                placeholder="Filter by"
-              />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.entries(options).map(([groupLabel, option]) => {
+        <div className="">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="w-full">
+                <SlidersHorizontal className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              {Object.entries(options).map(([groupKey, option]) => {
                 return (
-                  <SelectGroup key={groupLabel}>
-                    <SelectLabel className="capitalize">
-                      {groupLabel}
-                    </SelectLabel>
-                    {option.map(option => {
-                      const value = option.value.split("=")[1];
-
-                      return (
-                        <SelectItem
-                          key={option.value}
-                          value={option.value}
-                          className="cursor-pointer"
-                        >
-                          {searchParams.get(groupLabel) === value && (
-                            <span className="absolute left-2 top-1/2 flex h-3.5 w-3.5 -translate-y-1/2 items-center justify-center">
-                              <Check className="h-4 w-4" />
-                            </span>
-                          )}
-                          {option.label}
-                        </SelectItem>
-                      );
-                    })}
-                  </SelectGroup>
+                  <Fragment key={groupKey}>
+                    <DropdownMenuLabel className="capitalize">
+                      {groupKey}
+                    </DropdownMenuLabel>
+                    <DropdownMenuRadioGroup
+                      value={searchParams.get(groupKey) || ""}
+                      onValueChange={value => {
+                        const query = createQueryString(groupKey, value);
+                        router.replace(`${pathname}/?${query}`);
+                      }}
+                    >
+                      {option.map(option => {
+                        return (
+                          <DropdownMenuRadioItem
+                            value={option.value}
+                            key={option.value}
+                            className="cursor-pointer"
+                          >
+                            {option.label}
+                          </DropdownMenuRadioItem>
+                        );
+                      })}
+                    </DropdownMenuRadioGroup>
+                    <DropdownMenuSeparator />
+                  </Fragment>
                 );
               })}
-            </SelectContent>
-          </Select>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
       {hasFilter && (

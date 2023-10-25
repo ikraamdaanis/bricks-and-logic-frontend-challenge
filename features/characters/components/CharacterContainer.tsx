@@ -18,7 +18,9 @@ type Props = {
 };
 
 /**
- * Displays an individual character with more details.
+ * Displays an individual character with more details such as
+ * name, status, species, gender, origin, location and a list
+ * of episodes the character has appeared in.
  */
 export const CharacterContainer = ({ characterId }: Props) => {
   const router = useRouter();
