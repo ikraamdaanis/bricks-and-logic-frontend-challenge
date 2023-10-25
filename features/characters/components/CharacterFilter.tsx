@@ -69,7 +69,7 @@ export const CharacterFilter = () => {
   }
 
   return (
-    <>
+    <div className="flex w-full flex-col gap-2">
       <div className="flex w-full items-center gap-2">
         <Input
           placeholder="Search for a Character"
@@ -81,7 +81,7 @@ export const CharacterFilter = () => {
             router.replace(`${pathname}/?${value}`);
           }}
         />
-        <div className="">
+        <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="w-full">
@@ -123,7 +123,7 @@ export const CharacterFilter = () => {
         </div>
       </div>
       {hasFilter && (
-        <div className="flex w-full items-center justify-start gap-1">
+        <div className="flex w-full flex-wrap items-center justify-start gap-1 md:flex-nowrap">
           <span>Filters: </span>
           <FilterBadge
             filter={"status"}
@@ -142,13 +142,13 @@ export const CharacterFilter = () => {
           />
           <Button
             variant="link"
-            className="px-2"
+            className="ml-auto h-6 p-0 font-semibold text-blue-700"
             onClick={() => clearFilters()}
           >
             Clear Filters
           </Button>
         </div>
       )}
-    </>
+    </div>
   );
 };
