@@ -50,23 +50,23 @@ export const CharacterContainer = ({ characterId }: Props) => {
           <div className="flex w-full flex-col items-center lg:items-start">
             <div>
               <h2 className="mb-2 text-3xl font-bold">{character.name}</h2>
-              <p className="">
+              <p>
                 <b className="inline-block w-20 font-semibold">Status:</b>
                 {character.status}
               </p>
-              <p className="">
+              <p>
                 <b className="inline-block w-20 font-semibold">Species:</b>
                 {character.species}
               </p>
-              <p className="">
+              <p>
                 <b className="inline-block w-20 font-semibold">Gender:</b>
                 {character.gender}
               </p>
-              <p className="">
+              <p>
                 <b className="inline-block w-20 font-semibold">Origin:</b>
                 {character.origin.name}
               </p>
-              <p className="">
+              <p>
                 <b className="inline-block w-20 font-semibold">Location:</b>
                 {character.location.name}
               </p>

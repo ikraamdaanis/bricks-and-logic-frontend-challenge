@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "components/ui/button";
 import { Input } from "components/ui/input";
 import {
   Select,
@@ -54,6 +55,19 @@ export const CharacterFilter = () => {
     ]
   };
 
+  /** Clears all filters but doesn't remove the name search param. */
+  function clearFilters() {
+    const params = new URLSearchParams(searchParams);
+
+    Object.keys(options).forEach(key => {
+      params.delete(key);
+    });
+
+    const value = params.toString();
+
+    router.replace(`${pathname}/?${value}`);
+  }
+
   return (
     <>
       <div className="flex w-full items-center gap-2">
@@ -67,7 +81,7 @@ export const CharacterFilter = () => {
             router.replace(`${pathname}/?${value}`);
           }}
         />
-        <div className="w-[180px]">
+        <div className="w-36">
           <Select
             onValueChange={value => {
               const [key, v] = value.split("=");
@@ -132,6 +146,13 @@ export const CharacterFilter = () => {
             label={"Gender"}
             value={genderSearchFilter}
           />
+          <Button
+            variant="link"
+            className="px-2"
+            onClick={() => clearFilters()}
+          >
+            Clear Filters
+          </Button>
         </div>
       )}
     </>
