@@ -66,7 +66,7 @@ export const CharacterFilter = () => {
   }
 
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col gap-4">
       <div className="flex w-full items-center gap-2">
         <Input
           placeholder="Search for a Character"
