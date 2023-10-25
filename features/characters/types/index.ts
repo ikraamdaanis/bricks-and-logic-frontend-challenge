@@ -1,6 +1,13 @@
+/** https://rickandmortyapi.com/documentation/ */
+export const RICK_AND_MORTY_GRAPHQL_URI = "https://rickandmortyapi.com/graphql";
+
 type Location = {
   name: string;
   url: string;
+};
+
+export type CharacterResponse = {
+  character: Character;
 };
 
 export type Character = {
@@ -13,7 +20,7 @@ export type Character = {
   origin: Location;
   location: Location;
   image: string;
-  episode: string[];
+  episode: Episode[];
   url: string;
   created: string;
 };
@@ -26,10 +33,6 @@ export type Episode = {
   characters: string[];
   url: string;
   created: string;
-};
-
-export type CharacterResponse = Character & {
-  episodes: Episode[];
 };
 
 export type CharactersResponse = {

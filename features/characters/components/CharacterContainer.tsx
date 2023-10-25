@@ -25,18 +25,26 @@ type Props = {
 export const CharacterContainer = ({ characterId }: Props) => {
   const router = useRouter();
 
-  const { data: character, isLoading } = useFetchCharacter(characterId);
+  const {
+    data: character,
+    isLoading,
+    isError
+  } = useFetchCharacter(characterId);
 
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center px-4 py-4 xl:px-0">
       <Button
-        onClick={() => router.back()}
+        onClick={() => router.push("/")}
         className="my-0 mr-auto bg-brand2-600 hover:bg-brand2-500"
       >
         Back to Characters
       </Button>
       {isLoading ? (
         <Loader />
+      ) : isError ? (
+        <div className="mt-10 w-full rounded-md border border-rose-700 bg-rose-100 p-4">
+          Could not find the character.
+        </div>
       ) : (
         character && (
           <div className="w-full">
@@ -47,7 +55,10 @@ export const CharacterContainer = ({ characterId }: Props) => {
                   className="h-full w-full overflow-hidden rounded-md"
                   fill
                   src={character.image}
-                  objectFit="cover"
+                  style={{
+                    objectFit: "cover"
+                  }}
+                  sizes="300px"
                   priority
                 />
               </div>
@@ -88,7 +99,7 @@ export const CharacterContainer = ({ characterId }: Props) => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {character.episodes.map(episode => {
+                    {character.episode.map(episode => {
                       return (
                         <TableRow key={episode.id}>
                           <TableCell className="font-medium">
