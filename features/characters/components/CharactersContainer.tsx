@@ -47,7 +47,7 @@ export const CharactersContainer = () => {
         hasNextPage={hasNextPage || false}
         loadingMessage={null}
         className="scroller mx-auto flex flex-1 flex-col items-center overflow-auto"
-        disabled={isLoading || isError}
+        isDisabled={isError}
       >
         <div className="mx-auto grid w-full grid-cols-[minmax(0,340px)] gap-4 md:grid-cols-[repeat(2,minmax(0,340px))] lg:grid-cols-[repeat(3,minmax(0,340px))]">
           {isLoading && rows.length
