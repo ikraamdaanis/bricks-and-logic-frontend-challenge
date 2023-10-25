@@ -2,13 +2,13 @@
 
 import { Badge } from "components/ui/badge";
 import { Card, CardContent, CardTitle } from "components/ui/card";
-import { CharacterResponse } from "features/characters/types";
+import { Character } from "features/characters/types";
 import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
 
 type Props = {
-  character: CharacterResponse;
+  character: Character;
 };
 
 const statusVariants = {

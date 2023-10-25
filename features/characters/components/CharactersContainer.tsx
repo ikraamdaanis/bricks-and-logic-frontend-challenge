@@ -7,7 +7,7 @@ import {
 } from "features/characters/components/CharacterCard";
 import { CharacterFilter } from "features/characters/components/CharacterFilter";
 import { useFetchCharacters } from "features/characters/hooks/useFetchCharacters";
-import { CharacterResponse } from "features/characters/types";
+import { useGetSearchFilters } from "features/characters/hooks/useGetSearchFilters";
 import { useDebounce } from "hooks/useDebounce";
 import { useSearchParams } from "next/navigation";
 
@@ -21,6 +21,7 @@ export const CharactersContainer = () => {
 
   const debouncedSearchQuery = useDebounce(searchParams.toString());
 
+  const { gender, name, species, status } = useGetSearchFilters();
   const {
     data,
     isLoading,
@@ -29,12 +30,16 @@ export const CharactersContainer = () => {
     hasNextPage,
     isFetchingNextPage,
     isError
-  } = useFetchCharacters(debouncedSearchQuery);
+  } = useFetchCharacters(debouncedSearchQuery, {
+    gender,
+    name,
+    species,
+    status
+  });
 
   const isFetchingMore = isFetching || isFetchingNextPage;
 
-  const rows = (data?.pages.flatMap(page => page?.results || []) ||
-    []) as CharacterResponse[];
+  const rows = data?.pages.flatMap(page => page?.results || []) || [];
 
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-4 px-4 py-4 xl:px-0">
@@ -47,7 +52,7 @@ export const CharactersContainer = () => {
         hasNextPage={hasNextPage || false}
         loadingMessage={null}
         className="scroller mx-auto flex flex-1 flex-col items-center overflow-auto"
-        isDisabled={isError}
+        isDisabled={isError || !rows.length}
       >
         <div className="mx-auto grid w-full grid-cols-[minmax(0,340px)] gap-4 md:grid-cols-[repeat(2,minmax(0,340px))] lg:grid-cols-[repeat(3,minmax(0,340px))]">
           {isLoading && rows.length

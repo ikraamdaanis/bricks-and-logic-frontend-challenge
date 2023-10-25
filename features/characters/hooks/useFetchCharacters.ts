@@ -1,36 +1,44 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { CharactersResponse } from "features/characters/types";
+import { charactersQuery } from "features/characters/graphql/queries";
+import {
+  Characters,
+  CharactersQueryArgs,
+  CharactersResponse,
+  FilterCharacter,
+  RICK_AND_MORTY_GRAPHQL_URI
+} from "features/characters/types";
+import { request } from "graphql-request";
 
-// https://rickandmortyapi.com/documentation/
-const API_URL = "https://rickandmortyapi.com/api/character/?page=1";
-
-/** Fetches characters from he Rick and Morty API. */
+/** Fetches characters from he Rick and Morty GraphQL API. */
 async function fetchCharacters(
-  pageParam: string,
-  searchQuery: string
-): Promise<CharactersResponse> {
-  const response = await fetch(
-    `${pageParam || API_URL}${searchQuery && `&${searchQuery}`}`
-  );
+  pageParam: number,
+  filter: FilterCharacter
+): Promise<Characters> {
+  const responses = (await request<CharactersResponse, CharactersQueryArgs>(
+    RICK_AND_MORTY_GRAPHQL_URI,
+    charactersQuery,
+    { page: pageParam, filter }
+  )) as CharactersResponse;
 
-  if (response.status !== 200) {
-    throw new Error("Could not fetch any data.");
+  if (!responses?.characters?.info?.count) {
+    throw new Error();
   }
 
-  const data = (await response.json()) as CharactersResponse;
-
-  return data;
+  return responses.characters;
 }
 
 /**
  * Query hook that fetches Rick and Morty characters and/or
  * searches for them with several fields and filters.
  */
-export const useFetchCharacters = (searchQuery: string) => {
+export const useFetchCharacters = (
+  searchQuery: string,
+  filter: FilterCharacter
+) => {
   return useInfiniteQuery({
     queryKey: ["fetchCharacters", searchQuery],
-    queryFn: data => fetchCharacters(data.pageParam, searchQuery),
-    initialPageParam: API_URL,
+    queryFn: data => fetchCharacters(data.pageParam, filter),
+    initialPageParam: 1,
     getNextPageParam: data => data.info.next || null,
     getPreviousPageParam: data => data.info.prev || null,
     retry: 0

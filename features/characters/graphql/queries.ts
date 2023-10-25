@@ -32,3 +32,34 @@ export const characterQuery = gql`
     }
   }
 `;
+
+/** Type `CharactersResponse` */
+export const charactersQuery = gql`
+  query getCharacters($page: Int, $filter: FilterCharacter) {
+    characters(page: $page, filter: $filter) {
+      info {
+        count
+        pages
+        next
+        prev
+      }
+      results {
+        gender
+        id
+        location {
+          id
+          name
+        }
+        name
+        image
+        origin {
+          id
+          name
+        }
+        species
+        status
+        type
+      }
+    }
+  }
+`;

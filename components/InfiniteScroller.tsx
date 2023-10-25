@@ -36,8 +36,8 @@ export const InfiniteScroller = forwardRef<HTMLDivElement, InfiniteScrollProps>(
     useEffect(() => {
       const observer = new IntersectionObserver(
         entries => {
-          if (entries[0]?.isIntersecting) {
-            !isDisabled && fetchNextPage();
+          if (entries[0]?.isIntersecting && !isDisabled) {
+            fetchNextPage();
           }
         },
         { threshold: 1 }

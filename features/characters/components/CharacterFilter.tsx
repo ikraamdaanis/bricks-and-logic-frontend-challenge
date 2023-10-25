@@ -12,6 +12,7 @@ import {
 } from "components/ui/dropdown-menu";
 import { Input } from "components/ui/input";
 import { FilterBadge } from "features/characters/components/FilterBadge";
+import { useGetSearchFilters } from "features/characters/hooks/useGetSearchFilters";
 import { useCreateQueryString } from "hooks/useCreateQueryString";
 import { SlidersHorizontal } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -25,17 +26,13 @@ import { Fragment } from "react";
 export const CharacterFilter = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const createQueryString = useCreateQueryString();
 
-  const searchParams = useSearchParams();
-  const nameSearchQuery = searchParams.get("name") || "";
-  const statusSearchFilter = searchParams.get("status") || "";
-  const speciesSearchFilter = searchParams.get("species") || "";
-  const genderSearchFilter = searchParams.get("gender") || "";
+  const { gender, name, species, status } = useGetSearchFilters();
 
-  const hasFilter =
-    statusSearchFilter || speciesSearchFilter || genderSearchFilter;
+  const hasFilter = status || species || gender;
 
   // https://rickandmortyapi.com/documentation/#filter-characters
   const options = {
@@ -74,7 +71,7 @@ export const CharacterFilter = () => {
         <Input
           placeholder="Search for a Character"
           className="w-full"
-          defaultValue={nameSearchQuery}
+          defaultValue={name}
           onChange={({ target }) => {
             const value = createQueryString("name", target.value);
 
@@ -125,21 +122,9 @@ export const CharacterFilter = () => {
       {hasFilter && (
         <div className="flex w-full flex-wrap items-center justify-start gap-1 md:flex-nowrap">
           <span>Filters: </span>
-          <FilterBadge
-            filter={"status"}
-            label={"Status"}
-            value={statusSearchFilter}
-          />
-          <FilterBadge
-            filter={"species"}
-            label={"Species"}
-            value={speciesSearchFilter}
-          />
-          <FilterBadge
-            filter={"gender"}
-            label={"Gender"}
-            value={genderSearchFilter}
-          />
+          <FilterBadge filter={"status"} label={"Status"} value={status} />
+          <FilterBadge filter={"species"} label={"Species"} value={species} />
+          <FilterBadge filter={"gender"} label={"Gender"} value={gender} />
           <Button
             variant="link"
             className="ml-auto h-6 p-0 font-semibold text-blue-700"
