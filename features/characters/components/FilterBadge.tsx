@@ -43,7 +43,7 @@ export const FilterBadge = ({ filter, label, value }: Props) => {
           </Badge>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Click to remove this filter</p>
+          <p data-testid="tooltip-filter">Click to remove this filter</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
