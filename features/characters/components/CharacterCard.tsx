@@ -68,7 +68,10 @@ export const CharacterCard = memo(function CharacterCard({ character }: Props) {
 /** Skeleton Loader for the Character Cards. */
 export const CharacterCardLoader = () => {
   return (
-    <div className="flex h-[518px] animate-pulse flex-col rounded-md bg-zinc-300">
+    <div
+      className="flex h-[518px] animate-pulse flex-col rounded-md bg-zinc-300"
+      data-testid="character-card-loader"
+    >
       <div className="m-4 mb-0 h-[300px] w-[300px] animate-pulse rounded-md bg-zinc-400" />
       <div className="m-4 mb-0 h-6 w-40 animate-pulse rounded-sm bg-zinc-400"></div>
       <div className="m-4 mb-0 flex flex-col gap-2">

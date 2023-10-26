@@ -31,8 +31,6 @@ export const CharacterContainer = ({ characterId }: Props) => {
     isError
   } = useFetchCharacter(characterId);
 
-  console.log(character);
-
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center px-4 py-4 xl:px-0">
       <Button
