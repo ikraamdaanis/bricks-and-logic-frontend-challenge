@@ -41,6 +41,9 @@ export const CharactersContainer = () => {
 
   const rows = data?.pages.flatMap(page => page?.results || []) || [];
 
+  // If the queries are complete and there is no data, disable the infinite scroller's fetch next page.
+  const noRows = rows.length === 0 && !isLoading && !isFetching;
+
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-4 px-4 py-4 xl:px-0">
       <CharacterFilter />
@@ -52,7 +55,7 @@ export const CharactersContainer = () => {
         hasNextPage={hasNextPage || false}
         loadingMessage={null}
         className="scroller mx-auto flex flex-1 flex-col items-center overflow-auto"
-        isDisabled={isError || !rows.length}
+        isDisabled={isError || noRows}
       >
         <div className="mx-auto grid w-full grid-cols-[minmax(0,340px)] gap-4 md:grid-cols-[repeat(2,minmax(0,340px))] lg:grid-cols-[repeat(3,minmax(0,340px))]">
           {isLoading && rows.length
