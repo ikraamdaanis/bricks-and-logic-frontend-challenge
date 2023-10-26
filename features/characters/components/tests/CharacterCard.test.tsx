@@ -1,24 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { CharacterCard } from "features/characters/components/CharacterCard";
-import { Character } from "features/characters/types";
-
-const mockCharacter: Character = {
-  gender: "Male",
-  id: 12,
-  location: {
-    id: 5,
-    name: "Anatomy Park"
-  },
-  name: "Alexander",
-  image: "https://rickandmortyapi.com/api/character/avatar/12.jpeg",
-  origin: {
-    id: 1,
-    name: "Earth (C-137)"
-  },
-  species: "Human",
-  status: "Dead",
-  type: ""
-};
+import { mockCharacter } from "features/characters/mocks/mockCharacter";
 
 describe("CharacterCard", () => {
   it("renders correctly with the fields", () => {

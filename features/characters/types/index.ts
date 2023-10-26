@@ -6,7 +6,7 @@ export type CharacterResponse = {
 };
 
 export type Character = {
-  id: number;
+  id: string;
   name: string;
   status: "Alive" | "Dead" | "unknown";
   species: string;
@@ -19,12 +19,11 @@ export type Character = {
 };
 
 export type Episode = {
-  id: number;
+  id: string;
   name: string;
   air_date: string;
   episode: string;
-  characters: string[];
-  url: string;
+  characters: { id: string }[];
   created: string;
 };
 
@@ -60,6 +59,6 @@ export type FilterCharacter = {
 };
 
 export type Location = {
-  id: number;
+  id: string;
   name: string;
 };

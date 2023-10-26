@@ -31,6 +31,8 @@ export const CharacterContainer = ({ characterId }: Props) => {
     isError
   } = useFetchCharacter(characterId);
 
+  console.log(character);
+
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center px-4 py-4 xl:px-0">
       <Button
@@ -64,7 +66,12 @@ export const CharacterContainer = ({ characterId }: Props) => {
               </div>
               <div className="flex w-full flex-col items-start">
                 <div>
-                  <h2 className="mb-2 text-3xl font-bold">{character.name}</h2>
+                  <h2
+                    className="mb-2 text-3xl font-bold"
+                    data-testid="character-name"
+                  >
+                    {character.name}
+                  </h2>
                   <p>
                     <b className="inline-block w-20 font-semibold">Status:</b>
                     {character.status}
@@ -99,7 +106,7 @@ export const CharacterContainer = ({ characterId }: Props) => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {character.episode.map(episode => {
+                    {(character?.episode || [])?.map(episode => {
                       return (
                         <TableRow key={episode.id}>
                           <TableCell className="font-medium">
@@ -127,7 +134,7 @@ export const CharacterContainer = ({ characterId }: Props) => {
 /** Skeleton loader for the Character Container. */
 const Loader = () => {
   return (
-    <div className="w-full">
+    <div className="w-full" data-testid="character-container-loader">
       <div className="mt-10 flex w-full flex-col items-center justify-start gap-4 md:flex-row md:items-start">
         <div className="relative h-[400px] w-full min-w-[300px] max-w-full animate-pulse overflow-hidden rounded-md bg-zinc-300 md:h-[300px] md:w-[300px]"></div>
         <div className="flex w-full flex-col items-start">
