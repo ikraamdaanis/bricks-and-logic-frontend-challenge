@@ -34,8 +34,8 @@ export const CharacterContainer = ({ characterId }: Props) => {
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center px-4 py-4 xl:px-0">
       <Button
-        onClick={() => router.push("/")}
-        className="my-0 mr-auto bg-brand2-600 hover:bg-brand2-500"
+        onClick={() => router.back()}
+        className="my-0 mr-auto bg-brand-600 hover:bg-brand-500"
       >
         Back to Characters
       </Button>
