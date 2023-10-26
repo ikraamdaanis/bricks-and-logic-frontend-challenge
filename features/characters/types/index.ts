@@ -15,9 +15,7 @@ export type Character = {
   origin: Location;
   location: Location;
   image: string;
-  episode: Episode[];
-  url: string;
-  created: string;
+  episode?: Episode[];
 };
 
 export type Episode = {
@@ -62,6 +60,6 @@ export type FilterCharacter = {
 };
 
 export type Location = {
+  id: number;
   name: string;
-  url: string;
 };
